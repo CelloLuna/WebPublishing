@@ -1,3 +1,4 @@
+//same as insert collection file just diffferent data
 const { Collection } = require('mongodb');
 
 var MongoClient = require('mongodb').MongoClient;
