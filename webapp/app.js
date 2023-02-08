@@ -20,9 +20,15 @@ app.use((req, res) => {
     res.sendFile('/views/error.ejs', {root:__dirname});
 }); 
 */
+const item = [
+    {name: "Marcello", lName: "Luna"},
+    {name: "Evan", lName: "Sambrugaro"},
+    {name: "Calvin", lName: "Newlander"},
+    {name: "Caytlin", lName: "Lindeland"},
+]
 
 app.get('/', (req, res) => {
-    res.render('index', {title: "CRUD APP"});
+    res.render('index', {item});
 });  
 
 app.get('/add-item', (req, res) => {
