@@ -1,0 +1,18 @@
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "hwtwo",
+});
+
+con.connect(function(err){
+    if (err) throw err;
+    var query = ("SELECT s.salary, e.name FROM salary_grade s JOIN employees e ON s.employeeId = e.id");
+
+    con.query(query, function(err, res) {
+        if (err) throw err;
+        console.log(res);
+    });
+});
