@@ -1,15 +1,34 @@
 const express = require("express");
 const app = express();
+const mongoose = require("mongoose");
+const Item = require("./models/item.js");
 app.set("view engine", "ejs");
-app.listen(3000);
+const mongodb = "mongodb+srv://lunmars:lunmars1@cluster0.pnfpvdv.mongodb.net/cello?retryWrites=true&w=majority";
+mongoose.set("strictQuery", false);
+mongoose
+  .connect(mongodb, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log("Mongoose Connected");
+    app.listen(3000);
+  })
+  .catch((e) => console.log("ERROR: " + e));
 
-const item = [
-  { name: "IPhone 8", price: 800 },
-  { name: "Pixel 7", price: 600 },
-  { name: "Galxy S23", price: 1200 },
-  { name: "Galaxy Z-Flip", price: 1500 },
-];
+app.get("/create-item", (req, res) => {
+  const item = new Item({
+    name: "Galaxy S23",
+    price: 1200,
+  });
 
+  item
+    .save()
+    .then((result) => res.send(result))
+    .catch((e) => console.log("ERROR: " + e));
+});
+app.get("/get-item", (req, res) => {
+  Item.find()
+    .then((result) => res.send(result))
+    .catch((e) => console.log("ERROR: " + e));
+});
 app.get("/", (req, res) => {
   res.render("index", { item });
 });
