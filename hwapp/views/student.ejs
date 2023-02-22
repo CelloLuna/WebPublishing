@@ -3,8 +3,47 @@
   <%- include("./partials/head.ejs") %>
   <body>
     <%- include("./partials/nav.ejs") %>
-    <div class="container body">
-      <h1>About Page!</h1>
+    <div class="container">
+      <div class="row">
+        <form class="col s12" action="/students" method="post">
+          <div class="input-field col-sm-6">
+            <i class="material-icons prefix">person</i>
+            <input id="Stud_ID" type="number" class="validate" name="Stud_ID" />
+            <label for="Stud_ID">Student ID</label>
+          </div>
+          <div class="input-field col-sm-6">
+            <input id="stfname" type="text" class="validate" name="stfname" />
+            <label for="stfname">First Name</label>
+          </div>
+          <div class="input-field col-sm-6">
+            <input id="stlname" type="text" class="validate" name="stlname" />
+            <label for="stlname">Last Name</label>
+          </div>
+          <div class="input-field col-sm-6">
+            <input id="stcourse" type="text" class="validate" name="stcourse" />
+            <label for="stcourse">Course</label>
+          </div>
+          <div class="input-field col-sm-6">
+            <input id="styear" type="number" class="validate" name="styear" />
+            <label for="styear">Year</label>
+          </div>
+          <div class="input-field col-sm-6">
+            <input id="stcontact" type="text" class="validate" name="stcontact" />
+            <label for="stcontact">Contact</label>
+          </div>
+          <div class="input-field col-sm-6">
+            <input id="stage" type="number" class="validate" name="stage" />
+            <label for="stage">Age</label>
+          </div>
+          <div>
+            <button class="btn">Add Student</button>
+          </div>
+        </form>
+        <div class="col-m" style="margin-top: 10px">
+          <a class="btn" href="/studentsView">View Students</a>
+        </div>
+      </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   </body>
 </html>

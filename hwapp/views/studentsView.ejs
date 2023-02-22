@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+  <body>
+    <%- include("./partials/nav.ejs") %>
+    <div class="container">
+      <h2>Student List</h2>
+      <ul class="collection with-header">
+        <% if(student.length > 0) { student.forEach(student => { %>
+        <li class="collection-item">
+          <div>
+            <%= student.stfname %> <%= student.stlname %>
+            <a href="#" class="secondary-content"
+              ><i class="material-icons">delete</i><i class="material-icons">edit</i>
+            </a>
+          </div>
+        </li>
+        <% }); } %>
+      </ul>
+    </div>
+  </body>
+</html>

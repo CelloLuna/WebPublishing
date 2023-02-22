@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+  <body>
+    <%- include("./partials/nav.ejs") %>
+    <div class="container">
+      <h2>Course List</h2>
+      <ul class="collection with-header">
+        <% if(course.length > 0) { course.forEach(course => { %>
+        <li class="collection-item">
+          <div>
+            <%= course.course_remarks %> | <%= course.course_desc %>
+            <a href="#" class="secondary-content"
+              ><i class="material-icons">delete</i><i class="material-icons">edit</i>
+            </a>
+          </div>
+        </li>
+        <% }); } %>
+      </ul>
+    </div>
+  </body>
+</html>

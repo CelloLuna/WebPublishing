@@ -3,12 +3,35 @@
   <%- include("./partials/head.ejs") %>
   <body>
     <%- include("./partials/nav.ejs") %>
-    <div class="container body">
-      <h1>Course Page!</h1>
+    <div class="container">
+      <div class="row">
+        <form class="col s12" action="/courses" method="post">
+          <div class="input-field col-sm-6">
+            <i class="material-icons prefix">description</i>
+            <input id="course_ID" type="number" class="validate" name="course_ID" />
+            <label for="course_ID">Course ID</label>
+          </div>
+          <div class="input-field col-sm-6">
+            <input id="course_desc" type="text" class="validate" name="course_desc" />
+            <label for="course_desc">Course Description</label>
+          </div>
+          <div class="input-field col-sm-6">
+            <input id="units" type="number" class="validate" name="units" />
+            <label for="units">Units</label>
+          </div>
+          <div class="input-field col-sm-6">
+            <input id="course_remarks" type="text" class="validate" name="course_remarks" />
+            <label for="course_remarks">Course Remarks</label>
+          </div>
+          <div>
+            <button class="btn">Add Course</button>
+          </div>
+        </form>
+        <div class="col-m" style="margin-top: 10px">
+          <a class="btn" href="/coursesView">View Courses</a>
+        </div>
+      </div>
     </div>
-    <div>
-      <button class="btn" onclick="">Add Data</button>
-    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   </body>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </html>

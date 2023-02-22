@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+  <body>
+    <%- include("./partials/nav.ejs") %>
+    <div class="container">
+      <h2>Staff List</h2>
+      <ul class="collection with-header">
+        <% if(staff.length > 0) { staff.forEach(staff => { %>
+        <li class="collection-item">
+          <div>
+            <%= staff.fname %> <%= staff.lname %>
+            <a href="#" class="secondary-content"
+              ><i class="material-icons">delete</i><i class="material-icons">edit</i>
+            </a>
+          </div>
+        </li>
+        <% }); } %>
+      </ul>
+    </div>
+  </body>
+</html>
