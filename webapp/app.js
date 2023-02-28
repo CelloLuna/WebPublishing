@@ -37,6 +37,21 @@ app.post("/items", (req, res) => {
     .catch((e) => console.log("ERROR: " + e));
 });
 
+app.get("/items/:id", (req, res) => {
+  const id = req.params.id;
+  Item.findById(id).then((result) => {
+    console.log("result", result);
+    res.render("item-detail", { item: result });
+  });
+});
+
+app.delete("/items/:id", (req, res) => {
+  const id = req.params.id;
+  Item.findByIdAndDelete(id).then((result) => {
+    res.json({ redirect: "/" });
+  });
+});
+
 app.use((req, res) => {
   res.render("error");
 });

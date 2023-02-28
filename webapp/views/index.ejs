@@ -8,14 +8,27 @@
         <% if(item.length > 0) { item.forEach(item => { %>
         <li class="collection-item">
           <div>
-            <%= item.name %> | $<%= item.price %>
-            <a href="#" class="secondary-content"
-              ><i class="material-icons">delete</i><i class="material-icons">edit</i>
+            <a href="/items/<%= item._id %>"> <%= item.name %> | $<%= item.price %> </a>
+            <a href="#!" class="secondary-content">
+              <i class="material-icons" data-id="<%= item._id %>">delete</i>
+              <i class="material-icons modal-trigger" href="#edit_item_modal" data-id="<%= item._id %>">edit</i>
             </a>
           </div>
         </li>
-        <% }); } %>
+        <% }); %> <% }else { %>
+        <li>There are not items</li>
+        <% } %>
       </ul>
+    </div>
+    <div id="edit_item_modal" class="modal">
+      <div class="modal-content">
+        <h4>Edit Form</h4>
+        <form id="edit_form" action="">
+          <input type="text" name="name" placeholder="item name" />
+          <input type="number" name="price" placeholder="item price" />
+          <button class="btn">Update</button>
+        </form>
+      </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   </body>
