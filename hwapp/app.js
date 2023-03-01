@@ -24,6 +24,7 @@ app.get("/", (req, res) => {
 });
 
 //STUDENT PAGES
+//adding students
 app.get("/student", (req, res) => {
   title = "Student Page";
   res.render("student", { title });
@@ -43,6 +44,7 @@ app.get("/add-student", (req, res) => {
     .then((result) => res.send(result))
     .catch((e) => console.log("ERROR: " + e));
 });
+//querying
 app.get("/studentId", (req, res) => {
   Student.findById("63f641830a4cb121efb865c6")
     .then((result) => res.send(result))
@@ -58,6 +60,8 @@ app.get("/studentId", (req, res) => {
     .then((result) => res.send(result))
     .catch((e) => console.log("ERROR: " + e));
 });
+
+//view students
 app.post("/students", (req, res) => {
   console.log(req.body);
   const student = Student(req.body);
@@ -72,7 +76,24 @@ app.get("/studentsView", (req, res) => {
   });
 });
 
+//student detail and delete
+app.get("/students/:id", (req, res) => {
+  const id = req.params.id;
+  title = "Student Detail";
+  Student.findById(id).then((result) => {
+    console.log("result", result);
+    res.render("./details/studentsDetail", { student: result, title });
+  });
+});
+app.delete("/students/:id", (req, res) => {
+  const id = req.params.id;
+  Student.findByIdAndDelete(id).then((result) => {
+    res.json({ redirect: "/studentsView" });
+  });
+});
+
 //COURSE PAGES
+//add course
 app.get("/course", (req, res) => {
   title = "Course Page";
   res.render("course", { title });
@@ -90,6 +111,8 @@ app.get("/add-course", (req, res) => {
     .then((result) => res.send(result))
     .catch((e) => console.log("ERROR: " + e));
 });
+
+//query courses
 app.get("/allCourses", (req, res) => {
   Course.find()
     .then((result) => res.send(result))
@@ -100,6 +123,8 @@ app.get("/courseId", (req, res) => {
     .then((result) => res.send(result))
     .catch((e) => console.log("ERROR: " + e));
 });
+
+//view courses
 app.get("/coursesView", (req, res) => {
   title = "View";
   Course.find().then((result) => {
@@ -114,7 +139,24 @@ app.post("/courses", (req, res) => {
   });
 });
 
+//course detail and delete
+app.get("/courses/:id", (req, res) => {
+  const id = req.params.id;
+  title = "Course Detail";
+  Course.findById(id).then((result) => {
+    console.log("result", result);
+    res.render("./details/coursesDetail", { course: result, title });
+  });
+});
+app.delete("/courses/:id", (req, res) => {
+  const id = req.params.id;
+  Course.findByIdAndDelete(id).then((result) => {
+    res.json({ redirect: "/coursesView" });
+  });
+});
+
 //STAFF PAGES
+//add staff
 app.get("/staff", (req, res) => {
   title = "Staff page";
   res.render("staff", { title });
@@ -134,6 +176,8 @@ app.get("/add-staff", (req, res) => {
     .then((result) => res.send(result))
     .catch((e) => console.log("ERROR: " + e));
 });
+
+//query staff
 app.get("/allStaff", (req, res) => {
   Staff.find()
     .then((result) => res.send(result))
@@ -144,6 +188,8 @@ app.get("/staffId", (req, res) => {
     .then((result) => res.send(result))
     .catch((e) => console.log("ERROR: " + e));
 });
+
+//staff view
 app.get("/staffView", (req, res) => {
   title = "View";
   Staff.find().then((result) => {
@@ -155,5 +201,21 @@ app.post("/staff", (req, res) => {
   const staff = Staff(req.body);
   staff.save().then(() => {
     res.redirect("/staffView");
+  });
+});
+
+//staff detail and delete
+app.get("/staff/:id", (req, res) => {
+  const id = req.params.id;
+  title = "Staff Detail";
+  Staff.findById(id).then((result) => {
+    console.log("result", result);
+    res.render("./details/staffDetail", { staff: result, title });
+  });
+});
+app.delete("/staff/:id", (req, res) => {
+  const id = req.params.id;
+  Staff.findByIdAndDelete(id).then((result) => {
+    res.json({ redirect: "/staffView" });
   });
 });

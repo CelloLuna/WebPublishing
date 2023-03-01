@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head.ejs') %>
+  <body>
+    <%- include('../partials/nav.ejs') %>
+    <div class="container">
+      <h4>Student Detail</h4>
+      <div>
+        <h5>Student ID: <%= student.Stud_ID %></h5>
+        <h5>Student Name: <%= student.stfname %> <%= student.stlname %></h5>
+        <h5>Student Course: <%= student.stcourse %></h5>
+        <h5>Student Year: <%= student.styear %></h5>
+        <h5>Student Contact: <%= student.stcontact %></h5>
+        <h5>Student Age: <%= student.stage %></h5>
+      </div>
+      <a id="deleteBtn" class="delete btn" data-id="<%= student._id %>">Delete</a>
+    </div>
+    <script>
+      deleteBtn.onclick = function (e) {
+        e.preventDefault();
+        const id = e.target.getAttribute("data-id");
+
+        const endpoint = `/students/${id}`;
+        fetch(endpoint, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("data", data);
+            window.location.href = data.redirect;
+          })
+          .catch((err) => console.log(err));
+      };
+    </script>
+  </body>
+</html>

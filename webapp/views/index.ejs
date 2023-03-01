@@ -9,14 +9,14 @@
         <li class="collection-item">
           <div>
             <a href="/items/<%= item._id %>"> <%= item.name %> | $<%= item.price %> </a>
-            <a href="#!" class="secondary-content">
+            <a href="#" class="secondary-content">
               <i class="material-icons" data-id="<%= item._id %>">delete</i>
               <i class="material-icons modal-trigger" href="#edit_item_modal" data-id="<%= item._id %>">edit</i>
             </a>
           </div>
         </li>
         <% }); %> <% }else { %>
-        <li>There are not items</li>
+        <li>There are no items</li>
         <% } %>
       </ul>
     </div>
