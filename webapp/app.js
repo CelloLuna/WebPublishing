@@ -1,59 +1,66 @@
-const express = require("express");
+const express = require('express');
 const app = express();
-const mongoose = require("mongoose");
-const Item = require("./models/item.js");
-app.set("view engine", "ejs");
+const mongoose = require('mongoose');
+const Item = require('./models/item.js');
+app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
-const mongodb = "mongodb://127.0.0.1:27017/Lab2";
-// const mongodb = "mongodb+srv://lunmars:lunmars1@cluster0.pnfpvdv.mongodb.net/cello?retryWrites=true&w=majority";
-mongoose.set("strictQuery", false);
+//const mongodb = "mongodb://127.0.0.1:27017/Lab2";
+const mongodb = 'mongodb+srv://lunmars:lunmars1@cluster0.pnfpvdv.mongodb.net/Lab2?retryWrites=true&w=majority';
+mongoose.set('strictQuery', false);
 mongoose
   .connect(mongodb, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    console.log("Mongoose Connected");
+    console.log('Mongoose Connected');
     app.listen(3000);
   })
-  .catch((e) => console.log("ERROR: " + e));
+  .catch((e) => console.log('ERROR: ' + e));
 
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
   Item.find()
     .then((result) => {
-      res.render("index", { item: result });
+      res.render('index', { item: result });
     })
-    .catch((e) => console.log("ERROR: " + e));
+    .catch((e) => console.log('ERROR: ' + e));
 });
-app.get("/add-item", (req, res) => {
-  res.render("addItem");
+app.get('/add-item', (req, res) => {
+  res.render('addItem');
 });
 
-app.post("/items", (req, res) => {
+app.post('/items', (req, res) => {
   console.log(req.body);
   const item = Item(req.body);
   item
     .save()
     .then(() => {
-      res.redirect("/");
+      res.redirect('/');
     })
-    .catch((e) => console.log("ERROR: " + e));
+    .catch((e) => console.log('ERROR: ' + e));
 });
 
-app.get("/items/:id", (req, res) => {
+app.get('/items/:id', (req, res) => {
   const id = req.params.id;
   Item.findById(id).then((result) => {
-    console.log("result", result);
-    res.render("item-detail", { item: result });
+    console.log('result', result);
+    res.render('item-detail', { item: result });
   });
 });
 
-app.delete("/items/:id", (req, res) => {
+app.delete('/items/:id', (req, res) => {
   const id = req.params.id;
   Item.findByIdAndDelete(id).then((result) => {
-    res.json({ redirect: "/" });
+    res.json({ redirect: '/' });
+  });
+});
+
+app.put('/items/:id', (req, res) => {
+  const id = req.params.id;
+  Item.findByIdAndUpdate(id, req.body).then((result) => {
+    res.json({ msg: 'Update Successful' });
   });
 });
 
 app.use((req, res) => {
-  res.render("error");
+  res.render('error');
 });
 
 // app.get("/create-item", (req, res) => {
