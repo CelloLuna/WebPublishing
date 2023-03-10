@@ -12,22 +12,5 @@
         <h5>Course Remarks: <%= course.course_remarks %></h5>
       </div>
     </div>
-    <script>
-      deleteBtn.onclick = function (e) {
-        e.preventDefault();
-        const id = e.target.getAttribute('data-id');
-
-        const endpoint = `/courses/${id}`;
-        fetch(endpoint, {
-          method: 'DELETE',
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log('data', data);
-            window.location.href = data.redirect;
-          })
-          .catch((err) => console.log(err));
-      };
-    </script>
   </body>
 </html>

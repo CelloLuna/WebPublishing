@@ -13,24 +13,6 @@
         <h5>Student Contact: <%= student.stcontact %></h5>
         <h5>Student Age: <%= student.stage %></h5>
       </div>
-      <a id="deleteBtn" class="delete btn" data-id="<%= student._id %>">Delete</a>
     </div>
-    <script>
-      deleteBtn.onclick = function (e) {
-        e.preventDefault();
-        const id = e.target.getAttribute("data-id");
-
-        const endpoint = `/students/${id}`;
-        fetch(endpoint, {
-          method: "DELETE",
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log("data", data);
-            window.location.href = data.redirect;
-          })
-          .catch((err) => console.log(err));
-      };
-    </script>
   </body>
 </html>

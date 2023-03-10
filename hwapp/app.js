@@ -92,6 +92,14 @@ app.delete('/students/:id', (req, res) => {
   });
 });
 
+//studnet update
+app.put('/students/:id', (req, res) => {
+  const id = req.params.id;
+  Student.findByIdAndUpdate(id, req.body).then((result) => {
+    res.json({ msg: 'Update Successful' });
+  });
+});
+
 //COURSE PAGES
 //add course
 app.get('/course', (req, res) => {
@@ -225,5 +233,13 @@ app.delete('/staff/:id', (req, res) => {
   const id = req.params.id;
   Staff.findByIdAndDelete(id).then((result) => {
     res.json({ redirect: '/staffView' });
+  });
+});
+
+//staff update
+app.put('/staff/:id', (req, res) => {
+  const id = req.params.id;
+  Staff.findByIdAndUpdate(id, req.body).then((result) => {
+    res.json({ msg: 'Update Successful' });
   });
 });

@@ -10,12 +10,14 @@
         <li class="collection-item">
           <div>
             <strong>ID:</strong> <%= course.course_ID %> <br /><strong>Description:</strong> <%= course.course_desc %>
-            <a href="/courses/<%= course._id %>" class="secondary-content">
-              <i class="material-icons">preview</i>
+            <a id="deleteBtn" class="secondary-content">
+              <i class="material-icons" data-id="<%= course._id %>">delete</i>
             </a>
             <a href="#" class="secondary-content">
               <i class="material-icons modal-trigger" href="#edit_course_modal" data-id="<%= course._id %>">edit</i>
-              <i class="material-icons" data-id="<%= course._id %>">delete</i>
+            </a>
+            <a href="/courses/<%= course._id %>" class="secondary-content">
+              <i class="material-icons">preview</i>
             </a>
           </div>
         </li>
@@ -26,9 +28,9 @@
       <div class="modal-content">
         <h4>Edit Course</h4>
         <form id="edit_form" action="">
-          <input type="text" name="description" placeholder="Course Description" />
+          <input type="text" name="course_desc" placeholder="Course Description" />
           <input type="number" name="units" placeholder="Course Units" />
-          <input type="text" name="remarks" placeholder="Course Remarks" />
+          <input type="text" name="course_remarks" placeholder="Course Remarks" />
           <button class="btn">Update</button>
         </form>
       </div>
@@ -64,10 +66,25 @@
       };
 
       itemContainer.onclick = function (e) {
-        console.log('e.target.textContent', 'e.target.textContent');
+        console.log(e.target.textContent, e.target.textContent);
         if (e.target.textContent === 'edit') {
           updateId = e.target.getAttribute('data-id');
           console.log(updateId);
+        }
+        if (e.target.textContent === 'delete') {
+          e.preventDefault();
+          const id = e.target.getAttribute('data-id');
+          console.log(id);
+          const endpoint = `/courses/${id}`;
+          fetch(endpoint, {
+            method: 'DELETE',
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log('data', data);
+              window.location.href = data.redirect;
+            })
+            .catch((err) => console.log(err));
         }
       };
     </script>

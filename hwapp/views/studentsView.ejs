@@ -3,22 +3,93 @@
   <%- include("./partials/head.ejs") %>
   <body>
     <%- include("./partials/nav.ejs") %>
-    <div class="container">
+    <div id="itemContainer" class="container">
       <h2>Student List</h2>
       <ul class="collection with-header">
         <% if(student.length > 0) { student.forEach(student => { %>
         <li class="collection-item">
           <div>
             <strong>ID:</strong> <%= student.Stud_ID %> <br /><strong>NAME:</strong> <%= student.stfname %>
+            <a class="secondary-content">
+              <i class="material-icons" data-id="<%= student._id %>">delete</i>
+            </a>
+            <a class="secondary-content">
+              <i class="material-icons modal-trigger" href="#edit_students_modal" data-id="<%= student._id %>">edit</i>
+            </a>
             <a href="/students/<%= student._id %>" class="secondary-content">
               <i class="material-icons">preview</i>
-              <i class="material-icons">edit</i>
-              <i class="material-icons">delete</i>
             </a>
           </div>
         </li>
         <% }); } %>
       </ul>
     </div>
+    <div id="edit_students_modal" class="modal">
+      <div class="modal-content">
+        <h4>Edit Staff</h4>
+        <form id="edit_form" action="">
+          <input type="text" name="stfname" placeholder="First Name" />
+          <input type="text" name="stlname" placeholder="Last Name" />
+          <input type="text" name="stcourse" placeholder="Course" />
+          <input type="number" name="styear" placeholder="Year" />
+          <input type="text" name="stcontact" placeholder="Contact" />
+          <input type="number" name="stage" placeholder="Age" />
+          <button class="btn">Update</button>
+        </form>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+      integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems);
+      });
+
+      edit_form.onsubmit = async function (e) {
+        e.preventDefault();
+        let data = new FormData(edit_form);
+        for (var pair of data.entries()) {
+          console.log(pair[0] + ',' + pair[1]);
+        }
+        let response = await fetch(`/students/${updateId}`, {
+          method: 'put',
+          body: new URLSearchParams(data),
+          headers: new Headers({ 'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }),
+        });
+        console.log('RESPONSE:' + response);
+        let result = await response.json();
+        edit_form.reset();
+        window.location.reload();
+        alert(result.msg);
+      };
+
+      itemContainer.onclick = function (e) {
+        console.log('e.target.textContent', 'e.target.textContent');
+        if (e.target.textContent === 'edit') {
+          updateId = e.target.getAttribute('data-id');
+          console.log(updateId);
+        }
+        if (e.target.textContent === 'delete') {
+          e.preventDefault();
+          const id = e.target.getAttribute('data-id');
+          console.log(id);
+          const endpoint = `/students/${id}`;
+          fetch(endpoint, {
+            method: 'DELETE',
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log('data', data);
+              window.location.href = data.redirect;
+            })
+            .catch((err) => console.log(err));
+        }
+      };
+    </script>
   </body>
 </html>
