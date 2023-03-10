@@ -9,9 +9,11 @@
         <% if(student.length > 0) { student.forEach(student => { %>
         <li class="collection-item">
           <div>
-            <%= student.stfname %> <%= student.stlname %>
-            <a href="/students/<%= student._id %>" class="secondary-content"
-              ><i class="material-icons">delete</i><i class="material-icons">edit</i>
+            <strong>ID:</strong> <%= student.Stud_ID %> <br /><strong>NAME:</strong> <%= student.stfname %>
+            <a href="/students/<%= student._id %>" class="secondary-content">
+              <i class="material-icons">preview</i>
+              <i class="material-icons">edit</i>
+              <i class="material-icons">delete</i>
             </a>
           </div>
         </li>

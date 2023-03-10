@@ -6,7 +6,7 @@ const Course = require('./models/course.js');
 const Staff = require('./models/staff.js');
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
-const mongodb = 'mongodb://127.0.0.1:27017/Student_Management';
+const mongodb = 'mongodb+srv://lunmars:lunmars1@cluster0.pnfpvdv.mongodb.net/test';
 var title;
 
 mongoose.set('strictQuery', false);
@@ -152,6 +152,14 @@ app.delete('/courses/:id', (req, res) => {
   const id = req.params.id;
   Course.findByIdAndDelete(id).then((result) => {
     res.json({ redirect: '/coursesView' });
+  });
+});
+
+//course update
+app.put('/courses/:id', (req, res) => {
+  const id = req.params.id;
+  Course.findByIdAndUpdate(id, req.body).then((result) => {
+    res.json({ msg: 'Update Successful' });
   });
 });
 

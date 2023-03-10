@@ -9,9 +9,11 @@
         <% if(staff.length > 0) { staff.forEach(staff => { %>
         <li class="collection-item">
           <div>
-            <%= staff.fname %> <%= staff.lname %>
-            <a href="/staff/<%= staff._id %>" class="secondary-content"
-              ><i class="material-icons">delete</i><i class="material-icons">edit</i>
+            <strong>ID:</strong> <%= staff.staff_ID %> <br /><strong>NAME:</strong> <%= staff.fname %>
+            <a href="/staff/<%= staff._id %>" class="secondary-content">
+              <i class="material-icons">preview</i>
+              <i class="material-icons">edit</i>
+              <i class="material-icons">delete</i>
             </a>
           </div>
         </li>
