@@ -24,6 +24,8 @@ var connection = mysql.createConnection({
   database: 'apitest',
 });
 app.use(cors());
+
+// DISPLAY EMPLOYEES
 app.get('/api/cello', (request, response) => {
   var query = 'SELECT * from employees';
   connection.query(query, function (err, rows, fields) {
@@ -34,6 +36,7 @@ app.get('/api/cello', (request, response) => {
   });
 });
 
+//INSERT
 app.post('/api/department', (request, response) => {
   var query = 'INSERT INTO employees(EmployeeName, Department) values(?, ?)';
   var values = [request.body['EmpoyeeName'], request.body['Department']];
@@ -43,5 +46,52 @@ app.post('/api/department', (request, response) => {
       response.send('failed');
     }
     response.json('added successfully');
+  });
+});
+
+//UPDATE
+app.put('/api/employee', (request, response) => {
+  var query =
+    'UPDATE employees SET EmployeeName=?, Department=?, DateOfJoining=?, PhotoFileName=? WHERE EmployeeId = ?';
+  var values = [
+    request.body['EmployeeName'],
+    request.body['Department'],
+    request.body['DateOfJoining'],
+    request.body['PhotoFileName'],
+    request.body['EmployeeId'],
+  ];
+  connection.query(query, values, function (err, rows, fields) {
+    if (err) {
+      response.send('Failed' + err);
+    }
+    response.json('Data Updated');
+  });
+});
+
+//DELETE
+app.delete('/api/employee/:id', (request, response) => {
+  var query = 'DELETE FROM employees WHERE EmployeeId = ?';
+  var values = [parseInt(request.params.id)];
+  connection.query(query, values, function (err, rows, fields) {
+    if (err) {
+      response.send('ERROR:' + err);
+    }
+    response.json('Data Deleted');
+  });
+});
+
+//FILE UPLOAD
+var fileUpload = require('express-fileupload');
+var fs = require('fs');
+app.use(fileUpload());
+app.use('/Photos', Express.static(__dirname + '/Photos'));
+
+app.post('/api/employee/savefile', (request, response) => {
+  fs.writeFile('./Photos/' + request.files.file.name, request.files.file.data, function (err) {
+    if (err) {
+      l;
+      return console.log(err);
+    }
+    response.json(request.files.file.name);
   });
 });
