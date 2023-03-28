@@ -7,3 +7,9 @@
 - npm i express
 - npm i nodemon
 - npm i mongoose
+
+# for image crud app in addition to previous
+
+- npm i express-session
+- npm i multer
+- npm i dotenv
