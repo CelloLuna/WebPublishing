@@ -1,0 +1,51 @@
+<%- include('./layout/header.ejs') %>
+<div class="row">
+  <div class="col-lg-6 mx-auto mt-4">
+    <div class="card shadow">
+      <div class="card-header bg-primary">
+        <h3 class="text-light">Add New User</h3>
+      </div>
+      <div class="card-body p-4">
+        <div>
+          <form action="/add" method="post" id="add-form" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="name">Name</label>
+              <input type="text" name="name" class="form-control form-control-lg" placeholder="Enter Name" required />
+            </div>
+            <div class="mb-3">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                name="email"
+                class="form-control form-control-lg"
+                placeholder="Enter Email"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="phone">Phone</label>
+              <input
+                type="phone"
+                name="phone"
+                class="form-control form-control-lg"
+                placeholder="Enter Phone"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="image" class="form-label">Select Image</label>
+              <input name="image" class="form-control form-control-lg" type="file" required />
+            </div>
+            <div class="mb-3 d-grid">
+              <input type="submit" name="submit" value="Add User" class="btn btn-primary btn-lg" />
+            </div>
+          </form>
+          <div class="mb-3 d-grid">
+            <a href="/" type="button" value="Cancel" class="btn btn-warning btn-lg">Cancel</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('./layout/footer.ejs') %>
