@@ -10,6 +10,7 @@
       </div>
       <%} %>
       <div class="table-responsive">
+        <% if (users != '') { %>
         <table class="table table-striped text-center">
           <thead>
             <tr class="table-dark">
@@ -22,19 +23,24 @@
             </tr>
           </thead>
           <tbody>
+            <% users.forEach((row, index) => { %>
             <tr>
-              <td>1</td>
-              <td><img src="" alt="" /></td>
-              <td>Marcello Luna</td>
-              <td>lunmars@dunwoody.edu</td>
-              <td>1234567</td>
+              <td><%= index %></td>
+              <td><img src="<%= row.image %>" width="50" class="img-thumbnail" /></td>
+              <td><%= row.name %></td>
+              <td><%= row.email %></td>
+              <td><%= row.phone %></td>
               <td>
-                <a href="" class="text-success"><i class="fas fa-edit fa-lg mx-1"></i></a>
+                <a href="/edit/<%= row.id %>" class="text-success"><i class="fas fa-edit fa-lg mx-1"></i></a>
                 <a href="" class="text-danger"><i class="fas fa-trash fa-lg mx-1"></i></a>
               </td>
             </tr>
+            <% }); %>
           </tbody>
         </table>
+        <% } else {%>
+        <h1 class="text-center text-secondary mt-5">No Users to Display</h1>
+        <%} %>
       </div>
     </div>
   </div>

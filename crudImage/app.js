@@ -33,6 +33,9 @@ app.use((req, res, next) => {
   next();
 });
 
+//image folder
+app.use(express.static('uploads'));
+
 app.set('view engine', 'ejs');
 
 //ROUTE PREFIX
