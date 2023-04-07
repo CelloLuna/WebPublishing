@@ -1,0 +1,67 @@
+<%- include('./layouts/header.ejs') %>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 mx-auto mt-4">
+      <div class="card shadow">
+        <div class="card">
+          <div class="card-header bg-success">
+            <h3>Edit Customer: <%= customer.fName %> <%= customer.lName %></h3>
+          </div>
+          <div class="card-body p-4">
+            <form action="/updateCustomer/<%= customer.id %>" method="post" id="add-form" enctype="multipart/form-data">
+              <div class="mb-3">
+                <label for="fName">First Name</label>
+                <input
+                  type="text"
+                  name="fName"
+                  class="form-control form-control-lg"
+                  placeholder="Enter First Name"
+                  value="<%= customer.fName %>"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="lName">Last Name</label>
+                <input
+                  type="text"
+                  name="lName"
+                  class="form-control form-control-lg"
+                  placeholder="Enter Last Name"
+                  value="<%= customer.lName %>"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="email">Email</label>
+                <input
+                  type="text"
+                  name="email"
+                  class="form-control form-control-lg"
+                  placeholder="Enter Email"
+                  value="<%= customer.email %>"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="phone">Phone</label>
+                <input
+                  type="text"
+                  name="phone"
+                  class="form-control form-control-lg"
+                  placeholder="Enter Phone Number"
+                  value="<%= customer.phone %>"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="image" class="form-label">Select Image</label>
+                <input type="file" name="image" class="form-control form-control-lg" value="<%= customer.fname %>" />
+                <img src="/<%= customer.profileImage %>" width="200" class="img-thumbnail" />
+                <input type="hidden" name="old_image" value="<%= customer.profileImage %>" />
+              </div>
+              <div class="mb-3 d-grid">
+                <input type="submit" value="Update Customer" name="submit" class="btn btn-success btn-lg" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

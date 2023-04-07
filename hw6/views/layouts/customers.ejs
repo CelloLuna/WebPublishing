@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row my-4">
+    <div class="col-lg-12">
+      <% if(message) { %>
+      <div class="alert alert-dismissible fade show alert-<%- message.type %>">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+        <strong><%= message.message %></strong>
+      </div>
+      <% } %>
+      <h2>Customers</h2>
+      <div class="table-responsive">
+        <% if (customers != '') { %>
+        <table class="table table-striped text-center">
+          <thead>
+            <tr class="table-dark">
+              <th>ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Profile Image</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% customers.forEach((row, index) => { %>
+            <tr>
+              <td><%= index %></td>
+              <td><%= row.fName %></td>
+              <td><%= row.lName %></td>
+              <td><%= row.email %></td>
+              <td><%= row.phone %></td>
+              <td><img src="<%= row.profileImage %>" width="50" class="img-thumbnail" /></td>
+              <td>
+                <a href="/editCustomer/<%= row.id %>" class="text-success"><i class="fas fa-edit fa-lg mx-1"></i></a>
+                <a href="/deleteCustomer/<%= row.id %>" class="text-danger"><i class="fas fa-trash fa-lg mx-1"></i></a>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+        <% } else { %>
+        <h1 class="text-center text-secondary mt-5">No Customers To Display</h1>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>

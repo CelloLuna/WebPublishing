@@ -1,0 +1,57 @@
+<%- include('./layouts/header.ejs') %>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 mx-auto mt-4">
+      <div class="card shadow">
+        <div class="card">
+          <div class="card-header bg-success">
+            <h3>Edit Product: <%= product.name %></h3>
+          </div>
+          <div class="card-body p-4">
+            <form action="/updateProduct/<%= product.id %>" method="post" id="add-form" enctype="multipart/form-data">
+              <div class="mb-3">
+                <label for="name">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  class="form-control form-control-lg"
+                  placeholder="Enter Product Name"
+                  value="<%= product.name %>"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="price">Price</label>
+                <input
+                  type="text"
+                  name="price"
+                  class="form-control form-control-lg"
+                  placeholder="Enter Last Name"
+                  value="$<%= product.price %>"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="qty">Quantity</label>
+                <input
+                  type="text"
+                  name="qty"
+                  class="form-control form-control-lg"
+                  placeholder="Enter Quantity"
+                  value="<%= product.qty %>"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="image" class="form-label">Select Product Image</label>
+                <input type="file" name="image" class="form-control form-control-lg" value="<%= product.name %>" />
+                <img src="/<%= product.image %>" width="200" class="img-thumbnail" />
+                <input type="hidden" name="old_image" value="<%= product.profileImage %>" />
+              </div>
+              <div class="mb-3 d-grid">
+                <input type="submit" value="Update Product" name="submit" class="btn btn-success btn-lg" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

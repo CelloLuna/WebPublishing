@@ -32,7 +32,7 @@
               <td><%= row.phone %></td>
               <td>
                 <a href="/edit/<%= row.id %>" class="text-success"><i class="fas fa-edit fa-lg mx-1"></i></a>
-                <a href="" class="text-danger"><i class="fas fa-trash fa-lg mx-1"></i></a>
+                <a href="/delete/<%= row.id %> " class="text-danger"><i class="fas fa-trash fa-lg mx-1"></i></a>
               </td>
             </tr>
             <% }); %>
