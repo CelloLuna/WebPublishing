@@ -5,6 +5,59 @@
         <i class="fas fa-user-plus"></i>
         Register
       </h1>
+      <form action="/register" method="post">
+        <div class="form-group">
+          <label for="name" class="form-label">Name</label>
+          <input
+            type="name"
+            name="name"
+            id="name"
+            class="form-control"
+            placeholder="Enter Name"
+            value="<%= typeof name != 'undefined' ? name : '' %>"
+          />
+        </div>
+        <div class="form-group">
+          <label for="name" class="form-label">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            class="form-control"
+            placeholder="Enter Email"
+            value="<%= typeof email != 'undefined' ? email : '' %>"
+          />
+        </div>
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            class="form-control"
+            placeholder="Enter Password"
+            value="<%= typeof password != 'undefined' ? password : '' %>"
+          />
+        </div>
+        <div class="form-group">
+          <label for="password2" class="form-label">Password</label>
+          <input
+            type="password"
+            name="password2"
+            id="password2"
+            class="form-control"
+            placeholder="Confirm Password"
+            value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
+          />
+        </div>
+        <div class="d-grid mt-4">
+          <button type="submit" class="btn btn-primary">Register</button>
+        </div>
+      </form>
+      <p class="lead mt-4 text-center">
+        Have an Account?
+        <a href="/login">Login</a>
+      </p>
     </div>
   </div>
 </div>
