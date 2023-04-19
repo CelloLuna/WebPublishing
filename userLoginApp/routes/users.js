@@ -1,5 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
+const flash = require('connect-flash');
+
+const User = require('../module/User');
 
 //LOGIN PAGE
 router.get('/login', (req, res) => res.render('login', { title: 'Login' }));
@@ -34,7 +38,39 @@ router.post('/register', (req, res) => {
       title: 'Register',
     });
   } else {
-    res.send('pass');
+    User.findOne({ email: email }).then((user) => {
+      if (user) {
+        errors.push({ msg: 'Email Already Exists' });
+        res.render('register', {
+          errors,
+          name,
+          email,
+          password,
+          password2,
+          title: 'Register',
+        });
+        console.log('test');
+      } else {
+        const newUser = new User({
+          name,
+          email,
+          password,
+        });
+        console.log(newUser + 'test');
+        //password bcryot
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err;
+            newUser.password = hash;
+            newUser.save().then((user) => {
+              console.log(newUser);
+              req.flash('success_msg', 'You are now registered and can login');
+              res.redirect('/login');
+            });
+          });
+        });
+      }
+    });
   }
 });
 
