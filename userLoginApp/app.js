@@ -4,8 +4,12 @@ const app = express();
 const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
 const flash = require('connect-flash');
+const passport = require('passport');
 
 const mongoose = require('mongoose');
+
+//PASSPORT CONFIG
+require('./config/passport')(passport);
 
 //DB CONFIG
 const db = require('./config/keys').MongoURI;
@@ -31,6 +35,11 @@ app.use(
     saveUninitialized: true,
   })
 );
+
+//PASSPORT MIDDLEWARE
+app.use(passport.initialize());
+app.use(passport.session());
+
 //CONNECT FLASH
 app.use(flash());
 
@@ -38,6 +47,7 @@ app.use(flash());
 app.use(function (req, res, next) {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
   next();
 });
 //ROUTES
