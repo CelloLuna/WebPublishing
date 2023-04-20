@@ -3,6 +3,8 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const flash = require('connect-flash');
 const passport = require('passport');
+const session = require('express-session');
+
 const User = require('../module/User');
 
 //LOGIN PAGE
@@ -74,13 +76,24 @@ router.post('/register', (req, res) => {
   }
 });
 
-//Login Handle
+//LOGIN HANDLE
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', {
     successRedirect: '/dashboard',
     failureRedirect: '/login',
     failureFlash: true,
   })(req, res, next);
+});
+
+//LOGOUT HANDLE
+router.get('/logout', (req, res, next) => {
+  if (req.user) {
+    req.session.destroy();
+    res.clearCookie('connect.sid');
+    res.redirect('/login');
+  } else {
+    res.redirect('/login');
+  }
 });
 
 module.exports = router;

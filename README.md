@@ -18,8 +18,8 @@
 
 # use express session from previous list as well
 
-- npm i bcrypt
+- npm i bcryptjs
 - npm i passport
 - npm i passport-local
-- npm i ejs express ejs-layouts
+- npm i express ejs-layouts
 - npm i connect-flash
