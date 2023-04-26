@@ -1,49 +1,50 @@
-//IMPORTS
+//imports
 const express = require('express');
 const app = express();
 const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
 const flash = require('connect-flash');
+
+//passport
 const passport = require('passport');
-
-const mongoose = require('mongoose');
-
-//PASSPORT CONFIG
 require('./config/passport')(passport);
 
-//DB CONFIG
-const db = require('./config/keys').MongoURI;
+//config
+require('dotenv').config();
+const PORT = process.env.PORT;
 
-//CONNECT TO MONGODB
+//db
+const mongoose = require('mongoose');
+const DB = process.env.DB_URI;
+
 mongoose
-  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB Connected'))
-  .catch((err) => console.log);
+  .connect(DB, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Mongo Database Connected'))
+  .catch((err) => console.log('Database connection error: ', err));
 
-//EJS MIDDLEWARE
+//middleware
+app.use(express.urlencoded({ extended: true }));
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
 
-//EXPRESS BODY PARSER
-app.use(express.urlencoded({ extended: true }));
-
-//EXPRESS SESSION
+//session
+const SECRET_KEY = process.env.SESSION_KEY;
 app.use(
   session({
-    secret: 'secret',
+    secret: SECRET_KEY,
     resave: true,
     saveUninitialized: true,
   })
 );
 
-//PASSPORT MIDDLEWARE
+//passport
 app.use(passport.initialize());
 app.use(passport.session());
 
-//CONNECT FLASH
+//flash
 app.use(flash());
 
-//GLOBAL VARIABLES
+//global variables for messages
 app.use(function (req, res, next) {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
@@ -51,10 +52,9 @@ app.use(function (req, res, next) {
   res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
   next();
 });
-//ROUTES
-app.use('/', require('./routes/index'));
-app.use('/', require('./routes/users'));
-//PORT
-const PORT = process.env.PORT || 5001;
 
-app.listen(PORT, console.log(`Server started successfully at http://localhost:${PORT}`));
+//routes
+app.use('/', require('./routes/login'));
+app.use('/', require('./routes/pages'));
+
+app.listen(PORT, console.log(`App started at http://localhost:${PORT}`));

@@ -1,0 +1,43 @@
+<div class="container py-5 col-xl-10 col-xxl-8 px-4">
+  <div class="col-md-10 mx-auto col-lg-7">
+    <form class="p-4 p-md-8 border rounded-3 bg-body-tertiary" action="login" method="post">
+      <h1 class="text-center mb-3">Login<i class="bi-box-arrow-in-right"></i></h1>
+      <%- include('./partials/message.ejs') %>
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" name="user" id="user" placeholder="Email or Username" />
+        <label for="user">Username/Email</label>
+      </div>
+
+      <div class="input-group mb-3">
+        <div class="form-floating">
+          <input type="password" class="form-control" name="password" id="password" placeholder="Password" />
+          <label for="password">Password</label>
+        </div>
+        <span class="input-group-text" onclick="password_show_hide();">
+          <i class="bi-eye-fill" id="show_eye"></i>
+          <i class="bi-eye-slash-fill d-none" id="hide_eye"></i>
+        </span>
+      </div>
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
+      <hr class="my-4" />
+      <small class="text-body-secondary">No account? <a href="/register">Register</a></small>
+    </form>
+  </div>
+</div>
+<script>
+  function password_show_hide() {
+    var password = document.getElementById('password');
+    var show_eye = document.getElementById('show_eye');
+    var hide_eye = document.getElementById('hide_eye');
+    hide_eye.classList.remove('d-none');
+    if (password.type === 'password') {
+      password.type = 'text';
+      show_eye.style.display = 'none';
+      hide_eye.style.display = 'block';
+    } else {
+      password.type = 'password';
+      show_eye.style.display = 'block';
+      hide_eye.style.display = 'none';
+    }
+  }
+</script>
