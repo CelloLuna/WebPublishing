@@ -8,7 +8,19 @@
       </a>
 
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+        <li><a href="#" class="btn btn-outline-primary mx-1 text-white">Food Inventory</a></li>
+        <li><a href="#" class="btn btn-outline-primary mx-1 text-white">Gift Shop Inventory</a></li>
+        <div class="vr mx-2"></div>
+        <li>
+          <button
+            type="button"
+            class="btn btn-outline-secondary mx-1 text-white"
+            data-bs-toggle="modal"
+            data-bs-target="#addInventoryModal"
+          >
+            Add Inventory
+          </button>
+        </li>
       </ul>
 
       <div class="text-end">
@@ -17,3 +29,73 @@
     </div>
   </div>
 </header>
+
+<!-- Modal -->
+<div class="modal fade" id="addInventoryModal" tabindex="-1" aria-labelledby="addInventoryLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addInventoryLabel">Add New Item</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="p-2 p-md-8 rounded-3" action="addItem" method="post">
+          <div class="form-floating mb-3">
+            <input type="name" class="form-control" name="name" id="name" placeholder="Name" required />
+            <label for="name">Item Name</label>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control" name="qty" id="qty" placeholder="Quantity" />
+                <label for="qty">Quantity</label>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-floating mb-3 col">
+                <input type="text" class="form-control" name="uom" id="uom" placeholder="Unit of Measurement" />
+                <label for="uom">Unit of Measurement</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <select type="form-select" class="form-control" name="category" id="category" placeholder="Category">
+              <option value="Spice">Spice</option>
+              <option value="Dry Good">Dry Good</option>
+              <option value="Meat">Meat</option>
+              <option value="Seafood">Seafood</option>
+              <option value="Vegetable">Vegetable</option>
+              <option value="Fruit">Fruit</option>
+              <option value="Dairy">Dairy</option>
+            </select>
+            <label for="category">Category</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="location" id="location" placeholder="Location" required />
+            <label for="location">Location</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="date" class="form-control" name="use_by" id="use_by" placeholder="Use By Date" required />
+            <label for="use_by">Use By Date</label>
+          </div>
+          <div class="form-floating mb-3">
+            <textarea
+              type="text"
+              class="form-control"
+              name="note"
+              id="note"
+              placeholder="Notes:"
+              rows="3"
+              style="height: 100px"
+            ></textarea>
+            <label for="note">Notes</label>
+          </div>
+          <div class="modal-footer border-0 p-0">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Add to Inventory</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -11,7 +11,37 @@ const { QueryTypes } = require('sequelize');
 router.get('/', forwardAuthenticated, (req, res) => res.render('index', { title: 'Home' }));
 //rendering inventory page with auth
 router.get('/inventory', ensureAuthenticated, async (req, res) => {
-  let inventory = [];
+  res.render('inventory', {
+    user: req.user,
+    title: 'Inventory',
+    items: await getInventory(),
+  });
+});
+
+//add item post
+router.post('/addItem', async (req, res) => {
+  const category = await getCategory(req.body.category);
+  return await Item.create({
+    name: req.body.name,
+    qty: req.body.qty,
+    uom: req.body.uom,
+    category_id: category,
+    location: req.body.location,
+    last_purchase: Date.now(),
+    use_by: req.body.use_by,
+    note: req.body.note,
+  }).then((items) => {
+    if (items) {
+      res.redirect('inventory');
+    } else {
+      res.status(400).send('Error Inserting');
+    }
+  });
+});
+
+async function getInventory() {
+  //render inv query
+
   const inventoryQuery = await sequelize.query(
     `SELECT 
     inv.name as 'Name', 
@@ -33,12 +63,23 @@ router.get('/inventory', ensureAuthenticated, async (req, res) => {
       raw: true,
     }
   );
-  inventory = inventoryQuery;
-  console.log(inventory);
-  res.render('inventory', {
-    user: req.user,
-    title: 'Inventory',
-    items: inventory,
-  });
-});
+  const inventory = inventoryQuery;
+  return inventory;
+}
+
+async function getCategory(category) {
+  const categoryQuery = await sequelize.query(
+    `
+    SELECT cat.category_id
+    FROM cello_food_categories_tbl cat
+    JOIN cello_inventory_tbl inv
+    ON cat.category_id = inv.category_id
+    WHERE
+    cat.category = '${category}';
+    `
+  );
+  const getCategory = categoryQuery[0][0].category_id;
+  return getCategory;
+}
+
 module.exports = router;

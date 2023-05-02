@@ -6,6 +6,7 @@ const Item = sequelize.define(
   {
     item_id: {
       type: DataTypes.STRING,
+      defaultValue: sequelize.literal('newid()'),
       primaryKey: true,
     },
     category_id: DataTypes.STRING,
