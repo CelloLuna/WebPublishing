@@ -1,7 +1,31 @@
-<h1>Inventory</h1>
-<p class="lead mb-3">Name: <%= user.name %></p>
-<p class="lead mb-3">Date: <%= user.username %></p>
-<p class="lead mb-3">Email: <%= user.email %></p>
-<p class="lead mb-3">ID: <%= user.date %></p>
-<p class="lead mb-3">ID: <%= user.id %></p>
-<a href="/logout" class="btn btn-secondary">Logout</a>
+<table id="inventoryTable" class="table align-middle mb-0 bg-white">
+  <thead class="bg-light">
+    <tr>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Category</th>
+      <th>Location</th>
+      <th>Last Purchase</th>
+      <th>Use By</th>
+      <th>Note</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% items.forEach((row) => { %>
+    <tr>
+      <td><%= row.Name %></td>
+      <td><%= row.Quantity %></td>
+      <td><%= row.Category %></td>
+      <td><%= row.Location %></td>
+      <td><%= row.Last_Purchase %></td>
+      <td><%= row.Use_By %></td>
+      <td><%= row.Note %></td>
+      <td>
+        <a href=" "><i class="bi bi-pencil-square" style="font-size: 24px"></i></a>
+        <a href=" "><i class="bi bi-info-circle-fill" style="font-size: 24px"></i></a>
+      </td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>

@@ -13,7 +13,8 @@ require('./config/passport')(passport);
 require('dotenv').config();
 const PORT = process.env.PORT;
 
-//db
+//DB
+//mongo login
 const mongoose = require('mongoose');
 const DB = process.env.DB_URI;
 
@@ -21,6 +22,20 @@ mongoose
   .connect(DB, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Mongo Database Connected'))
   .catch((err) => console.log('Database connection error: ', err));
+
+//mssql inventory
+
+const { sequelize } = require('./config/database');
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('MSSQL Database Connected');
+    // Item.findAll();
+  })
+  .catch((err) => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 //middleware
 app.use(express.urlencoded({ extended: true }));
