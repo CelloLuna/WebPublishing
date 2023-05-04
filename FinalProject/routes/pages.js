@@ -21,6 +21,7 @@ router.get('/inventory', ensureAuthenticated, async (req, res) => {
 //add item post
 router.post('/addItem', async (req, res) => {
   const category = await getCategory(req.body.category);
+  console.log(category);
   return await Item.create({
     name: req.body.name,
     qty: req.body.qty,
@@ -32,6 +33,7 @@ router.post('/addItem', async (req, res) => {
     note: req.body.note,
   }).then((items) => {
     if (items) {
+      req.flash('success_msg', 'Item Added Successfully');
       res.redirect('inventory');
     } else {
       res.status(400).send('Error Inserting');
@@ -39,18 +41,58 @@ router.post('/addItem', async (req, res) => {
   });
 });
 
+//delete item
+router.post('/deleteItem/:Item_ID', async (req, res) => {
+  const item = req.params.Item_ID;
+  console.log('ITEM', item);
+  return await Item.destroy({
+    where: {
+      Item_ID: item,
+    },
+  }).then(() => {
+    req.flash('success_msg', 'Item Deleted Successfully');
+    res.redirect('/inventory');
+  });
+});
+
+//edit item
+router.post('/editItem/:Item_ID', async (req, res) => {
+  const category = await getCategory(req.body.category);
+  const item = req.params.Item_ID;
+  console.log('Item:', item);
+  return await Item.update(
+    {
+      name: req.body.name,
+      qty: req.body.zqty,
+      uom: req.body.uom,
+      category_id: category,
+      location: req.body.location,
+      use_by: req.body.use_by,
+      note: req.body.note,
+    },
+    {
+      where: { item_id: item },
+    }
+  ).then(() => {
+    req.flash('success_msg', 'Item Updated Successfully');
+    res.redirect('/inventory');
+  });
+});
+
 async function getInventory() {
   //render inv query
-
   const inventoryQuery = await sequelize.query(
     `SELECT 
+    inv.item_id as 'Item_ID',
     inv.name as 'Name', 
     CAST(inv.qty as varchar(20)) + ' ' + inv.uom as 'Quantity',
     cat.category as 'Category',
     inv.location as 'Location',
     inv.last_purchase as 'Last_Purchase',
     inv.use_by as 'Use_By',
-    inv.note as Note
+    inv.note as Note,
+    inv.qty as qty,
+    inv.uom as uom
   
     FROM cello_inventory_tbl inv
     JOIN cello_food_categories_tbl cat
@@ -72,8 +114,6 @@ async function getCategory(category) {
     `
     SELECT cat.category_id
     FROM cello_food_categories_tbl cat
-    JOIN cello_inventory_tbl inv
-    ON cat.category_id = inv.category_id
     WHERE
     cat.category = '${category}';
     `
