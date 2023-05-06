@@ -163,15 +163,27 @@
 </table>
 
 <script>
-  $('#editItemModal').on('hidden.bs.modal', function () {
-    document.getElementById('Spice').removeAttribute('selected');
-    document.getElementById('DryGood').removeAttribute('selected');
-    document.getElementById('Meat').removeAttribute('selected');
-    document.getElementById('Seafood').removeAttribute('selected');
-    document.getElementById('Vegetable').removeAttribute('selected');
-    document.getElementById('Fruit').removeAttribute('selected');
-    document.getElementById('Dairy').removeAttribute('selected');
+  $(document).ready(function () {
+    $('table').DataTable({
+      order: [0, 'desc'],
+      lengthMenu: [5, 10, 15, 50, 100],
+      pageLength: 5,
+    });
   });
+</script>
+<script>
+  $(document).ready(function () {
+    $('#editItemModal').on('hidden.bs.modal', function () {
+      document.getElementById('Spice').removeAttribute('selected');
+      document.getElementById('DryGood').removeAttribute('selected');
+      document.getElementById('Meat').removeAttribute('selected');
+      document.getElementById('Seafood').removeAttribute('selected');
+      document.getElementById('Vegetable').removeAttribute('selected');
+      document.getElementById('Fruit').removeAttribute('selected');
+      document.getElementById('Dairy').removeAttribute('selected');
+    });
+  });
+
   async function setFormData(name, qty, uom, category, location, date, note) {
     let selected = category.split(' ').join('');
     document.getElementById('editName').setAttribute('value', name);
