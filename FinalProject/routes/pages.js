@@ -33,7 +33,7 @@ router.post('/addItem', async (req, res) => {
     name: req.body.name,
     qty: req.body.qty,
     uom: req.body.uom,
-    category_id: category,
+    category: category,
     location: req.body.location,
     last_purchase: Date.now(),
     use_by: req.body.use_by,
@@ -90,7 +90,7 @@ async function getInventory() {
   //render inv query
   const inventoryQuery = await sequelize.query(
     `SELECT 
-    inv.item_id as 'Item_ID',
+    inv.inventory_id as 'Item_ID',
     inv.name as 'Name', 
     CAST(inv.qty as varchar(20)) + ' ' + inv.uom as 'Quantity',
     cat.category as 'Category',
@@ -101,9 +101,12 @@ async function getInventory() {
     inv.qty as qty,
     inv.uom as uom
   
-    FROM cello_inventory_tbl inv
-    JOIN cello_food_categories_tbl cat
-    ON inv.category_id = cat.category_id;
+    FROM inventory_tbl inv
+
+    JOIN inventory_category_ref cat
+    ON inv.category = cat.category
+
+	WHERE cat.category_for = 'food_items'
   `,
     {
       model: Item,
@@ -119,13 +122,13 @@ async function getInventory() {
 async function getCategory(category) {
   const categoryQuery = await sequelize.query(
     `
-    SELECT cat.category_id
-    FROM cello_food_categories_tbl cat
+    SELECT cat.category
+    FROM inventory_category_ref cat
     WHERE
     cat.category = '${category}';
     `
   );
-  const getCategory = categoryQuery[0][0].category_id;
+  const getCategory = categoryQuery[0][0].category;
   return getCategory;
 }
 

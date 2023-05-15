@@ -9,7 +9,7 @@ const Item = sequelize.define(
       defaultValue: sequelize.literal('newid()'),
       primaryKey: true,
     },
-    category_id: DataTypes.STRING,
+    category: DataTypes.STRING,
     location: DataTypes.STRING,
     name: DataTypes.STRING,
     qty: DataTypes.NUMBER,
@@ -19,7 +19,7 @@ const Item = sequelize.define(
     note: DataTypes.STRING,
   },
   {
-    tableName: 'cello_inventory_tbl',
+    tableName: 'inventory_tbl',
     timestamps: false,
   }
 );
