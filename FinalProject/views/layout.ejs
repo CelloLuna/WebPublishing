@@ -27,7 +27,7 @@
     <title><%= title %></title>
   </head>
   <body>
-    <% if(title === 'Inventory') { %> <%- include('./partials/header.ejs') %> <% } %>
+    <% if(title === 'Inventory' || title === 'Shop Inventory') { %> <%- include('./partials/header.ejs') %> <% } %>
     <div class="container"><%- body %></div>
 
     <!-- BOOTSTRAP -->

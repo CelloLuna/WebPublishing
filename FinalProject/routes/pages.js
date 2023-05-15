@@ -17,6 +17,13 @@ router.get('/inventory', ensureAuthenticated, async (req, res) => {
     items: await getInventory(),
   });
 });
+router.get('/shop', ensureAuthenticated, async (req, res) => {
+  res.render('shopInv', {
+    user: req.user,
+    title: 'Shop Inventory',
+    products: [],
+  });
+});
 
 //add item post
 router.post('/addItem', async (req, res) => {

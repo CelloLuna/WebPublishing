@@ -1,5 +1,5 @@
 <div class="mt-1"><%- include('./partials/message.ejs') %></div>
-<% if (items.length) {%>
+<% if (products.length) { %>
 <table id="inventoryTable" class="table align-middle mb-0 bg-white">
   <thead class="bg-light">
     <tr>
@@ -14,7 +14,7 @@
     </tr>
   </thead>
   <tbody>
-    <% items.forEach((row) => { %>
+    <% products.forEach((row) => { %>
     <tr>
       <td><%= row.Name %></td>
       <td><%= row.Quantity %></td>
@@ -159,7 +159,7 @@
       </div>
     </div>
 
-    <% }); } else { %>
+    <% }); %> <% } else { %>
     <h1>No Items To Display</h1>
     <p class="lead">There is no data or you are not connected to the Dunwoody internet.</p>
     <% }; %>
@@ -174,34 +174,4 @@
       pageLength: 5,
     });
   });
-</script>
-<script>
-  $(document).ready(function () {
-    $('#editItemModal').on('hidden.bs.modal', function () {
-      document.getElementById('Spice').removeAttribute('selected');
-      document.getElementById('DryGood').removeAttribute('selected');
-      document.getElementById('Meat').removeAttribute('selected');
-      document.getElementById('Seafood').removeAttribute('selected');
-      document.getElementById('Vegetable').removeAttribute('selected');
-      document.getElementById('Fruit').removeAttribute('selected');
-      document.getElementById('Dairy').removeAttribute('selected');
-    });
-  });
-
-  async function setFormData(name, qty, uom, category, location, date, note) {
-    let selected = category.split(' ').join('');
-    document.getElementById('editName').setAttribute('value', name);
-    document.getElementById('editQty').setAttribute('value', qty);
-    document.getElementById('editUom').setAttribute('value', uom);
-    await document.getElementById(selected).setAttribute('selected', '');
-    document.getElementById('editLocation').setAttribute('value', location);
-    document.getElementById('editUseBy').setAttribute('value', date);
-    document.getElementById('editNote').innerHTML = note;
-  }
-  function setDeleteAction(id) {
-    document.getElementById('delete-form').setAttribute('action', `/deleteItem/${id}`);
-  }
-  function setEditAction(id) {
-    document.getElementById('edit-form').setAttribute('action', `/editItem/${id}`);
-  }
 </script>
